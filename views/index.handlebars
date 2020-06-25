@@ -26,10 +26,10 @@
     }
 
     .alert-primary {
-        background-color: #2C4251;
-        color: white;
+        background-color: white;
+        color: #FF784F;
         border-radius: 0%;
-        border-color: #2C4251;
+        border-color: white;
     }
 
     footer {
@@ -42,7 +42,7 @@
     }
 
     a {
-        color: white;
+        color: #FF784F;
         text-decoration: none;
     }
 </style>
@@ -58,7 +58,7 @@
     {{/each}}
 </ul>
 
-<form class="text-center">
+<form class="text-center" onsubmit="submitBurger(event)">
     <div class="form-group mt-3 mb-3">
         <textarea class="form-control mx-auto" id="burgerInput" rows="3" style="max-width: 30%;"></textarea>
     </div>
@@ -69,6 +69,21 @@
 
 <footer>
     <section class="alert alert-primary" role="alert">
-        Built by Marcel Thiemann in Toronto &copy; 2020 | Icons by <a href="https://www.flaticon.com/authors/wanicon" target="_blank">wanicon</a> from <a href="https://www.flaticon.com/" target="_blank">flaticon.com</a>
+        Built by Marcel Thiemann in Toronto &copy; 2020 | Icons by <u><a href="https://www.flaticon.com/authors/wanicon" target="_blank">wanicon</a></u> from <u><a href="https://www.flaticon.com/" target="_blank">flaticon.com</a></u>
     </section>
 </footer>
+
+<script>
+    function submitBurger(event){
+        event.preventDefault();
+        axios.post('/burgers', {
+            name: document.getElementById("burgerInput").value
+        })
+        .then(function (response) {
+            window.location.reload();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+</script>

@@ -7,6 +7,8 @@ var exphbs = require("express-handlebars");
 // Create an instance of the express app
 var app = express();
 app.use(express.static('public'));
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // Set the port of our application
 var PORT = process.env.PORT || 8080;
@@ -32,9 +34,16 @@ app.set("view engine", "handlebars");
 app.get("/", function(req, response) {
     connection.query("SELECT * FROM items;", function(err, res) {
         if (err) throw err;
-        console.log(res);
         response.render("index", {burgers: res});
       });
+});
+
+app.post("/burgers", function(req, response){
+    connection.query("INSERT INTO items (name, devoured) VALUES (?, ?)", 
+        [req.body.name, 0], function(err, res){
+            if(err) throw err;
+            response.send({success: true});
+        });
 });
 
 // Start the server
