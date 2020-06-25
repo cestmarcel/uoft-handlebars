@@ -30,21 +30,31 @@ connection.connect(function(err) {
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Routes
+// GET routes
 app.get("/", function(req, response) {
     connection.query("SELECT * FROM items;", function(err, res) {
         if (err) throw err;
-        response.render("index", {burgers: res});
+        var burgers = res.filter(burger => burger.devoured == 0);
+        var devouredBurgers = res.filter(burger => burger.devoured == 1);
+        response.render("index", {burgers: burgers, devouredBurgers: devouredBurgers});
       });
 });
 
 app.post("/burgers", function(req, response){
     connection.query("INSERT INTO items (name, devoured) VALUES (?, ?)", 
-        [req.body.name, 0], function(err, res){
+        [req.body.burgerInput, 0], function(err, res){
             if(err) throw err;
-            response.send({success: true});
+            response.redirect("/");
         });
-});
+}); 
+
+app.post("/devoured", function(req, response){
+    connection.query("UPDATE items SET devoured=1 WHERE name=?", 
+        [req.body.devouredInput], function(err, res){
+            if(err) throw err;
+            response.redirect("/");
+        });
+}); 
 
 // Start the server
 app.listen(PORT, function() {

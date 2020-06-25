@@ -20,9 +20,24 @@
     }
 
     .btn-primary:hover {
-        background-color: #2C4251;
-        border-color: #2C4251;
+        background-color: gray;
+        border-color: gray;
         color: white;
+    }
+
+    .btn-secondary {
+        margin-left: 5px;
+        padding: 2px;
+        display: inline-block;
+    }
+
+    .burger-name {
+        display: inline-block;
+    }
+
+    .burger-name-devoured {
+        color: gray;
+        text-decoration: line-through;
     }
 
     .alert-primary {
@@ -50,17 +65,32 @@
 <img class="mx-auto mt-5 mb-5" style="width: 15%; display: block;" src="/img/burger.png" alt="Burger!" />
 <h1 class="text-center">Eat-da-Burger!</h1>
 
-<ul class="container">
-    {{#each burgers}}
-    <li>
-        <p>{{name}}</p>
-    </li>
-    {{/each}}
-</ul>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <ul class="container">
+                {{#each burgers}}
+                <li>
+                    <form action="/devoured" method="POST"><input type="hidden" name="devouredInput" value="{{name}}"><p class="burger-name">{{name}}</p><button type="submit" class="btn btn-secondary">Devour!</button></form>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col-sm-6">
+            <ul class="container">
+                {{#each devouredBurgers}}
+                <li>
+                    <p class="burger-name-devoured">{{name}}</p>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>
 
-<form class="text-center" onsubmit="submitBurger(event)">
+<form class="text-center" action="/burgers" method="POST">
     <div class="form-group mt-3 mb-3">
-        <textarea class="form-control mx-auto" id="burgerInput" rows="3" style="max-width: 30%;"></textarea>
+        <textarea class="form-control mx-auto" name="burgerInput" rows="3" style="max-width: 30%;"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
@@ -74,16 +104,5 @@
 </footer>
 
 <script>
-    function submitBurger(event){
-        event.preventDefault();
-        axios.post('/burgers', {
-            name: document.getElementById("burgerInput").value
-        })
-        .then(function (response) {
-            window.location.reload();
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    }
+
 </script>
