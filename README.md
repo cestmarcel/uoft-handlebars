@@ -1,4 +1,4 @@
-<img src="https://img.shields.io/badge/cestmarcel-EmployeeTracker-navy">
+<img src="https://img.shields.io/badge/cestmarcel-BurgerApp-navy">
 
 <img src="https://img.shields.io/badge/Version-1.0-green">
 
