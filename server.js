@@ -14,12 +14,17 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 var PORT = process.env.PORT || 8080;
 
 // Setting up database connection
-var connection = mysql.createConnection({
-    host     : process.env.DB_HOST,
-    user     : process.env.DB_USER,
-    password : process.env.DB_PASS,
-    database : 'burgers'
-  });
+var connection;
+if(process.env.JAQSDB_URL){
+    connection = mysql.createConnection(process.env.JAQSDB_URL);
+} else {
+    connection = mysql.createConnection({
+        host     : process.env.DB_HOST,
+        user     : process.env.DB_USER,
+        password : process.env.DB_PASS,
+        database : 'burgers'
+      });
+};
 
 connection.connect(function(err) {
     if (err) throw err;
