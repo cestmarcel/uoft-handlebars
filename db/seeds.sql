@@ -1,0 +1,1 @@
+INSERT INTO items (name, devoured) VALUES ("Cheese burger", FALSE), ("Double Bacon Hamburger", FALSE), ("BBQ Chicken Burger", TRUE);
