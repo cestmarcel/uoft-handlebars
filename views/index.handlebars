@@ -71,7 +71,7 @@
             <ul class="container">
                 {{#each burgers}}
                 <li>
-                    <form action="/devoured" method="POST"><input type="hidden" name="devouredInput" value="{{name}}"><p class="burger-name">{{name}}</p><button type="submit" class="btn btn-secondary">Devour!</button></form>
+                    <form action="/devoured" method="POST"><input type="hidden" name="devouredInput" value="{{name}}"><p class="burger-name">{{id}}. {{name}}</p><button type="submit" class="btn btn-secondary">Devour!</button></form>
                 </li>
                 {{/each}}
             </ul>
@@ -80,7 +80,7 @@
             <ul class="container">
                 {{#each devouredBurgers}}
                 <li>
-                    <p class="burger-name-devoured">{{name}}</p>
+                    <p class="burger-name-devoured">{{id}}. {{name}}</p>
                 </li>
                 {{/each}}
             </ul>
